@@ -1,0 +1,42 @@
+@model IEnumerable<ExClmMvc.Models.ExpenseClaimViewModel>
+
+@{
+    ViewData["Title"] = "Expense Claims";
+}
+
+<h2>Expense Claims</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Claim</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Expense Category</th>
+            <th>Subcategories</th>
+            <th>Claim Amount</th>
+            <th>Expense Date</th>
+            <th>Expense Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EmployeeName</td>
+                <td>@item.CategoryName</td>
+                <td>@item.SubcategoryNames</td>
+                <td>@item.ClaimAmount</td>
+                <td>@item.ExpenseDate.ToShortDateString()</td>
+                <td>@item.ExpenseLocation</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ExpenseClaimId" class="btn btn-secondary">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ExpenseClaimId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
