@@ -6,9 +6,14 @@
 
 <h2>Expense Claims</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New Claim</a>
-</p>
+<div class="d-flex justify-content-between mb-2">
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New Claim</a>
+    </p>
+    <p class="text-right font-weight-bold">
+        Total Claim Amount: @ViewBag.TotalClaimAmount
+    </p>
+</div>
 
 <table class="table">
     <thead>

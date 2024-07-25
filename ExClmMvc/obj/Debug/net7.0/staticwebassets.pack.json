@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\ExClmMvc.bundle.scp.css"
     },
     {
+      "Id": "C:\\InterviewPreparation\\MVC Project\\ExClmAdo\\ExClmMvc\\wwwroot\\Images\\8eb75d24-7703-4cdf-86b8-f34383537421_IMG_20240331_150445 (1).jpg",
+      "PackagePath": "staticwebassets\\Images\\8eb75d24-7703-4cdf-86b8-f34383537421_IMG_20240331_150445 (1).jpg"
+    },
+    {
       "Id": "C:\\InterviewPreparation\\MVC Project\\ExClmAdo\\ExClmMvc\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

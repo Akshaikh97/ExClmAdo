@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/a+bHpGRxC2SDAueXCD0OtP35J2aGdQj7p7bNkEeChQ=",
+  "Hash": "S0+bqWKcpuhD/jOj3FaPSXKoOaXMZ73YTJh7R1lH96Y=",
   "Source": "ExClmMvc",
   "BasePath": "_content/ExClmMvc",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\InterviewPreparation\\MVC Project\\ExClmAdo\\ExClmMvc\\wwwroot\\Images\\8eb75d24-7703-4cdf-86b8-f34383537421_IMG_20240331_150445 (1).jpg",
+      "SourceId": "ExClmMvc",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\InterviewPreparation\\MVC Project\\ExClmAdo\\ExClmMvc\\wwwroot\\",
+      "BasePath": "_content/ExClmMvc",
+      "RelativePath": "Images/8eb75d24-7703-4cdf-86b8-f34383537421_IMG_20240331_150445 (1).jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\8eb75d24-7703-4cdf-86b8-f34383537421_IMG_20240331_150445 (1).jpg"
     },
     {
       "Identity": "C:\\InterviewPreparation\\MVC Project\\ExClmAdo\\ExClmMvc\\wwwroot\\js\\site.js",

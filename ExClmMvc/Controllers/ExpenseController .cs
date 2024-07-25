@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ExClmMvc.Models;
@@ -17,17 +15,20 @@ namespace ExClmMvc.Controllers
     {
         private readonly SqlConnection con;
         private readonly IWebHostEnvironment _hostingEnvironment;
+
         public ExpenseController(SqlConnection _con, IWebHostEnvironment hostingEnvironment)
         {
             con = _con;
             _hostingEnvironment = hostingEnvironment;
         }
+
         [HttpGet("Index")]
         public IActionResult Index()
         {
             var claims = GetAllClaims();
             var employees = GetAllEmployees();
             var categories = GetAllCategories();
+            var totalClaimAmount = GetTotalClaimAmount();
 
             foreach (var claim in claims)
             {
@@ -42,8 +43,11 @@ namespace ExClmMvc.Controllers
                 claim.SubcategoryNames = string.Join(", ", subcategoryNames);
             }
 
+            ViewBag.TotalClaimAmount = totalClaimAmount;
+
             return View(claims);
         }
+
         [HttpGet("Create")]
         public IActionResult Create()
         {
@@ -63,6 +67,7 @@ namespace ExClmMvc.Controllers
 
             return View(viewModel);
         }
+
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ExpenseClaimViewModel viewModel, IFormFile billAttachment)
@@ -147,12 +152,29 @@ namespace ExClmMvc.Controllers
 
             return View(viewModel);
         }
+
         [HttpGet("GetSubcategories")]
         public JsonResult GetSubcategories(int categoryId)
         {
             var subcategories = GetSubcategoriesByCategoryId(categoryId);
             return Json(subcategories);
         }
+
+        private decimal GetTotalClaimAmount()
+        {
+            decimal totalClaimAmount = 0;
+            var command = new SqlCommand("GetTotalClaimAmount", con) { CommandType = CommandType.StoredProcedure };
+            con.Open();
+            var result = command.ExecuteScalar();
+            if (result != null)
+            {
+                totalClaimAmount = Convert.ToDecimal(result);
+            }
+            con.Close();
+
+            return totalClaimAmount;
+        }
+
         private List<ExpenseCategory> GetAllCategories()
         {
             var categories = new List<ExpenseCategory>();
@@ -174,6 +196,7 @@ namespace ExClmMvc.Controllers
 
             return categories;
         }
+
         private List<ExpenseClaimViewModel> GetAllClaims()
         {
             var claims = new List<ExpenseClaimViewModel>();
@@ -202,6 +225,7 @@ namespace ExClmMvc.Controllers
 
             return claims;
         }
+
         private List<Employee> GetAllEmployees()
         {
             var employees = new List<Employee>();
@@ -226,6 +250,7 @@ namespace ExClmMvc.Controllers
 
             return employees;
         }
+
         private List<ExpenseSubcategory> GetSubcategoriesByIds(List<int> subcategoryIds)
         {
             var subcategories = new List<ExpenseSubcategory>();
@@ -250,6 +275,7 @@ namespace ExClmMvc.Controllers
 
             return subcategories;
         }
+
         private List<ExpenseSubcategory> GetSubcategoriesByCategoryId(int categoryId)
         {
             var subcategories = new List<ExpenseSubcategory>();
@@ -273,17 +299,18 @@ namespace ExClmMvc.Controllers
 
             return subcategories;
         }
-        private void AddClaim(ExpenseClaim model)
+
+        private void AddClaim(ExpenseClaim claim)
         {
-            var command = new SqlCommand("AddClaim", con) { CommandType = CommandType.StoredProcedure };
-            command.Parameters.AddWithValue("@EmployeeId", model.EmployeeId);
-            command.Parameters.AddWithValue("@CategoryId", model.CategoryId);
-            command.Parameters.AddWithValue("@SubcategoryIds", model.SubcategoryIds);
-            command.Parameters.AddWithValue("@ClaimAmount", model.ClaimAmount);
-            command.Parameters.AddWithValue("@ExpenseDate", model.ExpenseDate);
-            command.Parameters.AddWithValue("@ExpenseLocation", model.ExpenseLocation);
-            command.Parameters.AddWithValue("@BillAttachment", model.BillAttachment ?? (object)DBNull.Value);
-            command.Parameters.AddWithValue("@Remarks", model.Remarks);
+            var command = new SqlCommand("AddExpenseClaim", con) { CommandType = CommandType.StoredProcedure };
+            command.Parameters.AddWithValue("@EmployeeId", claim.EmployeeId);
+            command.Parameters.AddWithValue("@CategoryId", claim.CategoryId);
+            command.Parameters.AddWithValue("@SubcategoryIds", claim.SubcategoryIds);
+            command.Parameters.AddWithValue("@ClaimAmount", claim.ClaimAmount);
+            command.Parameters.AddWithValue("@ExpenseDate", claim.ExpenseDate);
+            command.Parameters.AddWithValue("@ExpenseLocation", claim.ExpenseLocation);
+            command.Parameters.AddWithValue("@BillAttachment", claim.BillAttachment ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@Remarks", claim.Remarks);
             con.Open();
             command.ExecuteNonQuery();
             con.Close();
