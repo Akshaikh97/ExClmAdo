@@ -15,13 +15,11 @@ namespace ExClmMvc.Controllers
     {
         private readonly SqlConnection con;
         private readonly IWebHostEnvironment _hostingEnvironment;
-
         public ExpenseController(SqlConnection _con, IWebHostEnvironment hostingEnvironment)
         {
             con = _con;
             _hostingEnvironment = hostingEnvironment;
         }
-
         [HttpGet("Index")]
         public IActionResult Index()
         {
@@ -47,7 +45,6 @@ namespace ExClmMvc.Controllers
 
             return View(claims);
         }
-
         [HttpGet("Create")]
         public IActionResult Create()
         {
@@ -67,7 +64,6 @@ namespace ExClmMvc.Controllers
 
             return View(viewModel);
         }
-
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ExpenseClaimViewModel viewModel, IFormFile billAttachment)
@@ -152,14 +148,12 @@ namespace ExClmMvc.Controllers
 
             return View(viewModel);
         }
-
         [HttpGet("GetSubcategories")]
         public JsonResult GetSubcategories(int categoryId)
         {
             var subcategories = GetSubcategoriesByCategoryId(categoryId);
             return Json(subcategories);
         }
-
         private decimal GetTotalClaimAmount()
         {
             decimal totalClaimAmount = 0;
@@ -174,7 +168,6 @@ namespace ExClmMvc.Controllers
 
             return totalClaimAmount;
         }
-
         private List<ExpenseCategory> GetAllCategories()
         {
             var categories = new List<ExpenseCategory>();
@@ -196,7 +189,6 @@ namespace ExClmMvc.Controllers
 
             return categories;
         }
-
         private List<ExpenseClaimViewModel> GetAllClaims()
         {
             var claims = new List<ExpenseClaimViewModel>();
@@ -225,7 +217,6 @@ namespace ExClmMvc.Controllers
 
             return claims;
         }
-
         private List<Employee> GetAllEmployees()
         {
             var employees = new List<Employee>();
@@ -250,7 +241,6 @@ namespace ExClmMvc.Controllers
 
             return employees;
         }
-
         private List<ExpenseSubcategory> GetSubcategoriesByIds(List<int> subcategoryIds)
         {
             var subcategories = new List<ExpenseSubcategory>();
@@ -275,7 +265,6 @@ namespace ExClmMvc.Controllers
 
             return subcategories;
         }
-
         private List<ExpenseSubcategory> GetSubcategoriesByCategoryId(int categoryId)
         {
             var subcategories = new List<ExpenseSubcategory>();
@@ -299,7 +288,6 @@ namespace ExClmMvc.Controllers
 
             return subcategories;
         }
-
         private void AddClaim(ExpenseClaim claim)
         {
             var command = new SqlCommand("AddExpenseClaim", con) { CommandType = CommandType.StoredProcedure };
