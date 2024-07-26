@@ -290,7 +290,7 @@ namespace ExClmMvc.Controllers
         }
         private void AddClaim(ExpenseClaim claim)
         {
-            var command = new SqlCommand("AddExpenseClaim", con) { CommandType = CommandType.StoredProcedure };
+            var command = new SqlCommand("AddClaim", con) { CommandType = CommandType.StoredProcedure };
             command.Parameters.AddWithValue("@EmployeeId", claim.EmployeeId);
             command.Parameters.AddWithValue("@CategoryId", claim.CategoryId);
             command.Parameters.AddWithValue("@SubcategoryIds", claim.SubcategoryIds);

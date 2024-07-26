@@ -1,0 +1,68 @@
+CREATE TABLE [dbo].[Employees](
+	[EmployeeId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[Code] [nvarchar](max) NULL,
+	[Designation] [nvarchar](max) NULL,
+	[Department] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED 
+(
+	[EmployeeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+CREATE TABLE [dbo].[ExpenseCategories](
+	[CategoryId] [int] IDENTITY(1,1) NOT NULL,
+	[CategoryName] [nvarchar](max) NULL,
+ CONSTRAINT [PK_ExpenseCategories] PRIMARY KEY CLUSTERED 
+(
+	[CategoryId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+CREATE TABLE [dbo].[ExpenseSubcategories](
+	[SubcategoryId] [int] IDENTITY(1,1) NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[SubcategoryName] [nvarchar](max) NULL,
+ CONSTRAINT [PK_ExpenseSubcategories] PRIMARY KEY CLUSTERED 
+(
+	[SubcategoryId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[ExpenseSubcategories]  WITH CHECK ADD  CONSTRAINT [FK_ExpenseSubcategories_ExpenseCategories_CategoryId] FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[ExpenseCategories] ([CategoryId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ExpenseSubcategories] CHECK CONSTRAINT [FK_ExpenseSubcategories_ExpenseCategories_CategoryId]
+
+CREATE TABLE [dbo].[ExpenseClaims](
+	[ExpenseClaimId] [int] IDENTITY(1,1) NOT NULL,
+	[EmployeeId] [int] NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[SubcategoryIds] [nvarchar](max) NULL,
+	[ClaimAmount] [decimal](18, 2) NOT NULL,
+	[ExpenseDate] [datetime2](7) NOT NULL,
+	[ExpenseLocation] [nvarchar](max) NULL,
+	[BillAttachment] [nvarchar](max) NULL,
+	[Remarks] [nvarchar](max) NULL,
+	[SubcategoryNames] [nvarchar](max) NULL,
+ CONSTRAINT [PK_ExpenseClaims] PRIMARY KEY CLUSTERED 
+(
+	[ExpenseClaimId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[ExpenseClaims]  WITH CHECK ADD  CONSTRAINT [FK_ExpenseClaims_Employees_EmployeeId] FOREIGN KEY([EmployeeId])
+REFERENCES [dbo].[Employees] ([EmployeeId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ExpenseClaims] CHECK CONSTRAINT [FK_ExpenseClaims_Employees_EmployeeId]
+GO
+ALTER TABLE [dbo].[ExpenseClaims]  WITH CHECK ADD  CONSTRAINT [FK_ExpenseClaims_ExpenseCategories_CategoryId] FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[ExpenseCategories] ([CategoryId])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ExpenseClaims] CHECK CONSTRAINT [FK_ExpenseClaims_ExpenseCategories_CategoryId]
+GO

@@ -1,0 +1,42 @@
+INSERT INTO Employees (Name, Code, Designation, Department)
+VALUES
+    ('John Doe', 'E001', 'CEO', 'Management'),
+    ('Jane Smith', 'E002', 'Manager', 'Sales'),
+    ('Alice Johnson', 'E003', 'Assistant Manager', 'Marketing'),
+    ('Bob Brown', 'E004', 'Senior Developer', 'IT'),
+    ('Charlie Davis', 'E005', 'Junior Developer', 'IT');
+
+INSERT INTO ExpenseCategories (CategoryName)
+VALUES
+    ('Food'),
+    ('Travel'),
+    ('Office Supplies'),
+    ('Entertainment'),
+    ('Accommodation');
+
+INSERT INTO ExpenseSubcategories (CategoryId, SubcategoryName)
+VALUES
+    (1, 'Beverage'),
+    (1, 'Snacks'),
+    (1, 'Meal'),
+    (2, 'Airfare'),
+    (2, 'Taxi'),
+    (2, 'Hotel'),
+    (3, 'Stationery'),
+    (3, 'Electronics'),
+    (4, 'Movies'),
+    (4, 'Concerts'),
+    (5, 'Hotel'),
+    (5, 'Rental');
+
+INSERT INTO ExpenseClaims (EmployeeId, CategoryId, SubcategoryIds, ClaimAmount, ExpenseDate, ExpenseLocation, BillAttachment, Remarks)
+VALUES
+    (1, 1, '1,2', 500, '2024-07-01', 'Mumbai', 'bill1.pdf', 'Business meeting'),
+    (2, 2, '3', 1500, '2024-07-02', 'Delhi', 'bill2.pdf', 'Client visit'),
+    (3, 3, '4', 200, '2024-07-03', 'Bangalore', 'bill3.pdf', 'Office supplies'),
+    (4, 4, '5', 3000, '2024-07-04', 'Hyderabad', 'bill4.pdf', 'Project meeting'),
+    (5, 5, '6', 2500, '2024-07-05', 'Kolkata', 'bill5.pdf', 'Conference');
+
+SELECT * FROM Employees
+SELECT * FROM ExpenseCategories
+SELECT * FROM ExpenseSubcategories

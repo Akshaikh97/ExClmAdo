@@ -72,7 +72,9 @@
                         var $subcategories = $('#SubcategoryIds');
                         $subcategories.empty();
                         $.each(data, function (i, item) {
-                            $subcategories.append($('<option></option>').val(item.subcategoryId).text(item.subcategoryName));
+                            $subcategories.append($('<option></option>')
+                                          .val(item.subcategoryId)
+                                          .text(item.subcategoryName));
                         });
                     }
                 });
