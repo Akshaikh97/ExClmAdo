@@ -10,8 +10,6 @@ namespace ExClmMvc.Models
     public class ExpenseClaimViewModel
     {
         public int ExpenseClaimId { get; set; }
-
-        // For creating or updating claims
         [Required]
         public int EmployeeId { get; set; }
 
@@ -34,8 +32,6 @@ namespace ExClmMvc.Models
         public string? BillAttachment { get; set; }  
 
         public string? Remarks { get; set; }
-
-        // For displaying information
         public string EmployeeName { get; set; } = string.Empty;
         public string CategoryName { get; set; } = string.Empty;
         public string SubcategoryNames { get; set; } = string.Empty;
